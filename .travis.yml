@@ -32,5 +32,4 @@ addons:
       - liblzma-dev
       - unzip
 script:
-  - cargo build --features="$FEATURES" --verbose
   - cargo test --features="$FEATURES" --verbose
