@@ -67,6 +67,13 @@ setup_gluster() {
   gluster vol create test $HOSTNAME:/mnt/gluster-brick force
   echo -e "\tstart vol"
   gluster vol start test
+  cat > $HOME/.config/gluster.json <<EOF
+{
+    "server": "127.0.0.1",
+    "port": 24007,
+    "volume_name": "test"
+}
+EOF
 }
 
 install_vault() {
