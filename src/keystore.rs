@@ -140,8 +140,12 @@ impl KeyStore {
     }
 
     pub fn save<W: io::Write>(&self, writer: &mut W) -> Result<()> {
-        try!(write!(writer, "{}", json::as_pretty_json(&self)));
+        try!(write!(writer, "{}", self.as_pretty_json()));
         Ok(())
+    }
+
+    pub fn as_pretty_json(&self) -> String {
+        format!("{}", json::as_pretty_json(&self))
     }
 
     #[cfg(feature="vault")]
@@ -156,8 +160,10 @@ impl KeyStore {
         };
         let client = try!(Client::new(&vault_config.host, &vault_config.token));
         let secret_64 = try!(client.get_secret("backup_key"));
+        println!("Encoded: {:?}", secret_64);
         let decoded_64_vec = secret_64.from_base64().unwrap();
         let decoded_64 = try!(String::from_utf8(decoded_64_vec));
+        println!("Decoded: {:?}", decoded_64);
         Ok(try!(json::decode(&decoded_64)))
     }
 

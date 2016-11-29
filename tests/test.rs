@@ -165,6 +165,7 @@ impl TestConfig {
     pub fn create<P: AsRef<Path>>(&self, backup_name: &str, path: P) {
         let output = Command::new(&self.bin)
             .current_dir(&self.working_dir)
+            .arg("--logfile=trace")
             .arg("create")
             .arg("--keyfile")
             .arg("keyfile")
