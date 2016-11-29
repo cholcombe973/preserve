@@ -32,7 +32,9 @@ struct GlusterConfig {
 impl GlusterBackend {
     pub fn new() -> Result<GlusterBackend> {
         let gluster_config: GlusterConfig = {
-            let mut f = try!(File::open(format!("{}/{}", home_dir.unwrap().to_string_lossy(), ".config/gluster.json"));
+            let mut f = try!(File::open(format!("{}/{}",
+                                                home_dir.unwrap().to_string_lossy(),
+                                                ".config/gluster.json")));
             let mut s = String::new();
             try!(f.read_to_string(&mut s));
             try!(json::decode(&s))
