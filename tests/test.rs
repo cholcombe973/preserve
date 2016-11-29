@@ -16,12 +16,20 @@ use std::os::unix;
 #[test]
 fn integration_test_1() {
     let working_dir = TempDir::new("preserve-test").unwrap();
-    let backend_dir = TempDir::new("preserve-test").unwrap();
+
+    let backend: String = if cfg!(features = "gluster") {
+        format!("gluster://")
+    } else if cfg!(features = "ceph") {
+        format!("ceph://")
+    } else {
+        format!("file://{}",
+                TempDir::new("preserve-test").unwrap().path().to_string_lossy())
+    };
 
     let test_config = TestConfig {
         bin: Path::new("target/debug/preserve").canonicalize().unwrap(),
         working_dir: working_dir.path().to_path_buf(),
-        backend_dir: backend_dir.path().to_path_buf(),
+        backend: backend,
     };
 
     // Generate keyfile
@@ -140,7 +148,7 @@ fn dump_test_case() {
 struct TestConfig {
     pub bin: PathBuf,
     pub working_dir: PathBuf,
-    pub backend_dir: PathBuf,
+    pub backend: String,
 }
 
 impl TestConfig {
@@ -161,7 +169,7 @@ impl TestConfig {
             .arg("--keyfile")
             .arg("keyfile")
             .arg("--backend")
-            .arg("file://".to_string() + &self.backend_dir.to_string_lossy())
+            .arg(&self.backend)
             .arg(backup_name)
             .arg(path.as_ref())
             .output()
@@ -180,7 +188,7 @@ impl TestConfig {
             .arg("--keyfile")
             .arg("keyfile")
             .arg("--backend")
-            .arg("file://".to_string() + &self.backend_dir.to_string_lossy())
+            .arg(&self.backend)
             .arg(backup_name)
             .arg(restore_dir.path())
             .output()
