@@ -94,7 +94,7 @@ setup_vault() {
   cat > $HOME/.config/vault.json <<EOF
 {
  "host": "http://127.0.0.1:8200",
- "token": "test12345",
+ "token": "test12345"
 }
 EOF
 }
