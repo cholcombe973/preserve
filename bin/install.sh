@@ -91,6 +91,12 @@ setup_vault() {
   echo -e "setup vault"
   $VAULT server -dev > /dev/null 2>&1 &
   VAULT_ADDR=http://127.0.0.1:8200 $VAULT token-create -id="test12345" -ttl="720h"  > /dev/null 2>&1 &
+  cat > $HOME/.config/vault.json <<EOF
+{
+ "host": "http://127.0.0.1:8200",
+ "token": "test12345",
+}
+EOF
 }
 
 _ceph() {
