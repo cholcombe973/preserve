@@ -15,9 +15,9 @@ matrix:
     - rust: beta
   include:
     - rust: nightly
-      env: FEATURES="ceph gluster vault"
+      env: FEATURES="gluster vault"
     - rust: beta
-      env: FEATURES="ceph gluster vault"
+      env: FEATURES="ceph vault"
 env:
   - FEATURES="ceph"
   - FEATURES="gluster"
