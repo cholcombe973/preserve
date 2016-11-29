@@ -25,7 +25,7 @@ env:
   - FEATURES="ceph vault"
   - FEATURES="gluster vault"
 install:
-  - bin/install.sh
+  - sudo bin/install.sh
 addons:
   apt:
     packages:
