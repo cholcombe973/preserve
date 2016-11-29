@@ -37,7 +37,7 @@ impl CephBackend {
     pub fn new() -> Result<CephBackend> {
         let ceph_config: CephConfig = {
             let mut f = try!(File::open(format!("{}/{}",
-                                                home_dir.unwrap().to_string_lossy(),
+                                                home_dir().unwrap().to_string_lossy(),
                                                 ".config/ceph.json")));
             let mut s = String::new();
             try!(f.read_to_string(&mut s));
