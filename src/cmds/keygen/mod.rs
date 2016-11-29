@@ -23,7 +23,6 @@ pub struct VaultConfig {
 
 #[cfg(feature="vault")]
 fn save_keys_to_vault(buffer: &str) -> Result<()> {
-    // println!("Buffer is {:?}", buffer);
     let vault_config: VaultConfig = {
         let mut f = try!(File::open(format!("{}/{}",
                                             home_dir().unwrap().to_string_lossy(),
@@ -34,7 +33,6 @@ fn save_keys_to_vault(buffer: &str) -> Result<()> {
     };
     let client = try!(Client::new(&vault_config.host, &vault_config.token));
     let encoded = buffer.as_bytes().to_base64(STANDARD);
-    // println!("Saving {} to Vault", encoded);
     let res = try!(client.set_secret("backup_key", &encoded));
     Ok(())
 }
