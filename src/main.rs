@@ -8,6 +8,7 @@ extern crate ceph_rust;
 #[macro_use]
 extern crate clap;
 extern crate crypto;
+extern crate curl;
 #[cfg(feature = "gluster")]
 extern crate gfapi_sys;
 extern crate hashicorp_vault as vault;
@@ -22,6 +23,7 @@ pub mod newtype_macros;
 extern crate rand;
 extern crate rustc_serialize;
 extern crate rusqlite;
+extern crate s3;
 extern crate tempdir;
 extern crate time;
 extern crate url;

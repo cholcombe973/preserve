@@ -10,6 +10,7 @@ pub mod ceph;
 pub mod file;
 #[cfg(feature = "gluster")]
 pub mod gluster;
+pub mod s3;
 
 pub use backend::acd::AcdBackend;
 #[cfg(feature = "ceph")]
