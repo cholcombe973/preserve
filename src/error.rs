@@ -1,4 +1,5 @@
 use acd::Error as AcdError;
+use curl::Error as curlError;
 use rusqlite::Error as SqliteError;
 use rustc_serialize::json::DecoderError as JsonDecoderError;
 use std::error::Error as StdError;
@@ -37,6 +38,7 @@ pub enum Error {
     GlusterError(::gfapi_sys::gluster::GlusterError),
     #[cfg(feature = "ceph")]
     RadosError(::ceph_rust::ceph::RadosError),
+    S3Error(curlError),
     Sqlite(SqliteError),
     VaultError(::vault::Error),
 }
@@ -84,6 +86,7 @@ impl StdError for Error {
             JsonDecoder(_) => "Invalid JSON",
             #[cfg(feature = "ceph")]
             RadosError(ref e) => e.description(),
+            S3Error(ref e) => e.description(),
             Sqlite(ref e) => e.description(),
             VaultError(ref e) => e.description(),
             FromUtf8Error(ref e) => e.description(),
@@ -115,6 +118,7 @@ impl StdError for Error {
             VaultError(ref error) => Some(error),
             #[cfg(feature = "ceph")]
             RadosError(ref error) => Some(error),
+            S3Error(ref error) => Some(error),
             Sqlite(ref error) => Some(error),
             FromUtf8Error(ref error) => Some(error),
         }
@@ -156,6 +160,12 @@ impl From<::gfapi_sys::gluster::GlusterError> for Error {
 impl From<::vault::Error> for Error {
     fn from(err: ::vault::Error) -> Error {
         VaultError(err)
+    }
+}
+
+impl From<curlError> for Error {
+    fn from(err: curlError) -> Error {
+        S3Error(err)
     }
 }
 

@@ -14,6 +14,7 @@ gluster = ["gfapi-sys"]
 [dependencies]
 ceph-rust = {git = "https://github.com/cholcombe973/ceph-rust", optional = true}
 clap = "^2.19"
+curl = "~0.4"
 gfapi-sys = {version = "^0.2", optional = true}
 libc = "^0.2"
 json = "^0.11"
@@ -23,10 +24,12 @@ rusqlite = "^0.6"
 rust-crypto = "^0.2"
 rust-lzma = "^0.2"
 rustc-serialize = "^0.3"
+rust-s3 = {path ="../rust-s3"}
 tempdir = "^0.3"
 time = "0.1.35"
 url = "^1.2"
-hashicorp_vault = "^0.6"
+# hashicorp_vault = "^0.6"
+hashicorp_vault = {path = "../vault-rs"}
 
 [dependencies.rust-acd]
 git = "https://github.com/fpgaminer/rust-acd.git"
